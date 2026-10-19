@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Aprende fundamentos de Business Intelligence, toma de decisiones basada en datos y procesos ETL con contenido práctico y un dashboard interactivo de Lenovo.">
+    <meta name="theme-color" content="#0B0F19">
+    <title>BI esencial | Fundamentos de Business Intelligence</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts" defer></script>
+    <script src="js/main.js" defer></script>
+  </head>
+  <body>
+    <!-- Sitio estático para Codespaces: ejecuta `python3 -m http.server 3000` o `npx serve -l 3000` y abre el puerto 3000. No requiere dependencias de Node.js ni herramientas de compilación. -->
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+    <header class="site-header">
+      <nav class="navbar container" aria-label="Navegación principal">
+        <a class="brand" href="#inicio" aria-label="BI esencial, inicio">
+          <span class="brand-mark" aria-hidden="true">BI</span>
+          <span>BI<span class="brand-accent">esencial</span></span>
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir navegación">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="nav-links">
+          <a href="#fundamentos">Fundamentos</a>
+          <a href="#cuestionario">Cuestionario</a>
+          <a href="#dashboard">Dashboard Lenovo</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="contenido">
+      <section class="hero" id="inicio">
+        <div class="container hero-content reveal">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> Aprendizaje práctico · Datos para decidir</p>
+          <h1>Convierte los datos<br>en <span>mejores decisiones.</span></h1>
+          <p class="hero-copy">Explora los fundamentos de Business Intelligence, entiende el proceso ETL y pon a prueba tus conocimientos con un dashboard interactivo.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#fundamentos">Explorar fundamentos <span aria-hidden="true">→</span></a>
+            <a class="button button-quiet" href="#dashboard">Ver dashboard</a>
+          </div>
+          <div class="hero-proof" aria-label="Contenido de aprendizaje">
+            <span><strong>02</strong> módulos de estudio</span>
+            <span><strong>05</strong> preguntas interactivas</span>
+            <span><strong>03</strong> visualizaciones</span>
+          </div>
+        </div>
+        <div class="hero-orbit hero-orbit-one" aria-hidden="true"></div>
+        <div class="hero-orbit hero-orbit-two" aria-hidden="true"></div>
+      </section>
+
+      <section class="section fundamentals-section" id="fundamentos">
+        <div class="container">
+          <div class="section-heading reveal">
+            <p class="eyebrow eyebrow-dark">01 / Aprende</p>
+            <h2>Fundamentos de BI</h2>
+            <p>Dos módulos breves para conectar los conceptos con decisiones y procesos reales.</p>
+          </div>
+          <div class="learning-grid">
+            <article class="learning-card reveal">
+              <div class="module-icon" aria-hidden="true">01</div>
+              <div class="module-meta">Módulo 01 · Datos y ETL</div>
+              <h3>De los datos a la acción</h3>
+              <p>Descubre el ciclo de decisiones data-driven y cómo integrar fuentes mediante un proceso ETL.</p>
+              <details class="theory-details">
+                <summary>Leer módulo</summary>
+                <div class="theory-content" data-markdown="content/fundamentos_bi_1.md">
+                  <p class="loading-message">Cargando contenido…</p>
+                </div>
+              </details>
+            </article>
+            <article class="learning-card reveal">
+              <div class="module-icon" aria-hidden="true">02</div>
+              <div class="module-meta">Módulo 02 · Modelado y KPIs</div>
+              <h3>Diseña información útil</h3>
+              <p>Compara BI y analítica, conoce el modelado dimensional y define indicadores que orientan el negocio.</p>
+              <details class="theory-details">
+                <summary>Leer módulo</summary>
+                <div class="theory-content" data-markdown="content/fundamentos_bi_2.md">
+                  <p class="loading-message">Cargando contenido…</p>
+                </div>
+              </details>
+            </article>
+          </div>
+          <p class="content-note">Los módulos se cargan desde archivos Markdown locales para que el contenido sea fácil de mantener y ampliar.</p>
+        </div>
+      </section>
+
+      <section class="section quiz-section" id="cuestionario">
+        <div class="container quiz-layout">
+          <div class="quiz-intro reveal">
+            <p class="eyebrow eyebrow-dark">02 / Comprueba</p>
+            <h2>¿Listo para<br>ponerlo a prueba?</h2>
+            <p>Responde cinco preguntas sobre decisiones basadas en datos, ETL, modelado dimensional e indicadores.</p>
+            <div class="quiz-aside">
+              <span class="quiz-aside-mark" aria-hidden="true">✓</span>
+              <span>Recibe feedback inmediato y una explicación en cada pregunta.</span>
+            </div>
+          </div>
+          <div class="quiz-card reveal" id="quiz-card">
+            <div class="quiz-topline">
+              <span class="quiz-kicker">Conocimiento BI</span>
+              <span class="question-counter" id="question-counter">Pregunta 1 de 5</span>
+            </div>
+            <div class="progress-track" id="quiz-progress" role="progressbar" aria-label="Progreso del cuestionario" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
+              <span class="progress-fill" id="progress-fill"></span>
+            </div>
+            <div id="quiz-content" aria-live="polite"></div>
+            <div class="quiz-actions">
+              <span class="quiz-hint" id="quiz-hint">Elige la respuesta que consideres correcta.</span>
+              <button class="button button-primary quiz-next" id="quiz-next" type="button" disabled>Comprobar respuesta</button>
+            </div>
+            <div class="quiz-feedback" id="quiz-feedback" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section dashboard-section" id="dashboard">
+        <div class="container">
+          <div class="dashboard-hero reveal">
+            <div>
+              <p class="eyebrow">03 / Explora los datos</p>
+              <h2>Lenovo, en perspectiva.</h2>
+              <p>Un vistazo interactivo a los ingresos, la participación global en PC y la evolución de los envíos.</p>
+            </div>
+            <div class="dashboard-stamp" aria-label="Dashboard de ejemplo"><span>BI</span><small>DATA<br>VIEW</small></div>
+          </div>
+
+          <div class="dashboard-summary">
+            <article class="summary-card reveal">
+              <span class="summary-label">Ingresos FY2025/26</span>
+              <strong>US$83,075M</strong>
+              <span class="summary-foot"><span class="summary-dot"></span> Serie anual · millones de USD</span>
+            </article>
+            <article class="summary-card reveal">
+              <span class="summary-label">Cuota global de PCs</span>
+              <strong>27.2%</strong>
+              <span class="summary-foot"><span class="summary-dot"></span> Lenovo · 2025</span>
+            </article>
+            <article class="summary-card reveal">
+              <span class="summary-label">Crecimiento de envíos</span>
+              <strong>+17.6%</strong>
+              <span class="summary-foot"><span class="summary-dot"></span> Comparativa 2024–2025</span>
+            </article>
+          </div>
+
+          <div class="charts-grid">
+            <article class="chart-card chart-card-wide reveal">
+              <div class="chart-heading">
+                <div>
+                  <p class="chart-overline">Desempeño financiero</p>
+                  <h3>Ingresos anuales de Lenovo <span>(FY2022–FY2026)</span></h3>
+                </div>
+                <span class="chart-unit">Millones de USD</span>
+              </div>
+              <div class="chart-canvas" id="revenue-chart" aria-label="Gráfico de ingresos anuales de Lenovo"></div>
+            </article>
+
+            <article class="chart-card reveal">
+              <div class="chart-heading">
+                <div>
+                  <p class="chart-overline">Posición competitiva</p>
+                  <h3>Cuota de mercado global de PCs <span>(2025)</span></h3>
+                </div>
+              </div>
+              <div class="chart-canvas chart-canvas-bar" id="market-chart" aria-label="Gráfico de cuota de mercado global de PCs en 2025"></div>
+            </article>
+
+            <article class="chart-card reveal">
+              <div class="chart-heading">
+                <div>
+                  <p class="chart-overline">Volumen de envíos</p>
+                  <h3>Envíos anuales de PCs de Lenovo</h3>
+                </div>
+              </div>
+              <div class="chart-canvas chart-canvas-donut" id="shipments-chart" aria-label="Gráfico comparativo de envíos anuales de Lenovo"></div>
+              <p class="chart-caption">Miles de unidades · comparación 2024–2025</p>
+            </article>
+          </div>
+          <p class="data-note">Datos de ejemplo proporcionados para este material educativo. Las cifras se expresan en las unidades indicadas; consulta los informes corporativos y las fuentes de mercado antes de usarlas en análisis formales.</p>
+        </div>
+      </section>
+
+      <section class="section takeaways-section">
+        <div class="container takeaway-row reveal">
+          <div>
+            <p class="eyebrow eyebrow-dark">Una idea para llevar</p>
+            <h2>El valor no está en tener más datos.<br><span>Está en hacer mejores preguntas.</span></h2>
+          </div>
+          <a class="button button-primary" href="#inicio">Volver al inicio <span aria-hidden="true">↑</span></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <a class="brand footer-brand" href="#inicio">
+          <span class="brand-mark" aria-hidden="true">BI</span>
+          <span>BI<span class="brand-accent">esencial</span></span>
+        </a>
+        <p>Material educativo · Fundamentos de Business Intelligence</p>
+        <a class="footer-link" href="#fundamentos">Volver a fundamentos ↑</a>
+      </div>
+      <div class="container footer-bottom">
+        <span>Aprender · Analizar · Decidir</span>
+        <span>Hecho para aprender con datos.</span>
+      </div>
+    </footer>
+  </body>
+</html>
