@@ -62,6 +62,7 @@ let currentQuestionIndex = 0;
 let selectedOptionIndex = null;
 let score = 0;
 let answerChecked = false;
+let quizAnswers = [];
 
 function renderMarkdown(markdown) {
   const escapeHtml = (text) => text
@@ -216,10 +217,18 @@ function checkAnswer() {
   const correct = selectedOptionIndex === question.answer;
   answerChecked = true;
   if (correct) score += 1;
+  quizAnswers[currentQuestionIndex] = {
+    selectedIndex: selectedOptionIndex,
+    correct
+  };
 
   document.querySelectorAll(".quiz-option").forEach((option, index) => {
     option.disabled = true;
-    if (index === question.answer) option.classList.add("is-correct");
+    if (index === question.answer) {
+      option.classList.add("is-correct");
+      option.querySelector(".option-letter").textContent = "✓";
+      option.querySelector(".option-letter").setAttribute("aria-label", "Respuesta correcta");
+    }
     if (index === selectedOptionIndex && !correct) option.classList.add("is-incorrect");
   });
 
@@ -240,7 +249,8 @@ function renderQuizResult() {
   const button = document.getElementById("quiz-next");
   const hint = document.getElementById("quiz-hint");
   const feedback = document.getElementById("quiz-feedback");
-  if (!content || !button || !hint || !feedback) return;
+  const reportRow = document.getElementById("quiz-report-row");
+  if (!content || !button || !hint || !feedback || !reportRow) return;
 
   const percentage = (score / quizQuestions.length) * 100;
   let title;
@@ -266,9 +276,89 @@ function renderQuizResult() {
   `;
   content.querySelector("#quiz-restart").addEventListener("click", resetQuiz);
   button.hidden = true;
+  reportRow.hidden = false;
   hint.textContent = "Cuestionario completado";
   feedback.textContent = "";
   updateProgress(quizQuestions.length);
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function printQuizReport() {
+  const reportHint = document.getElementById("quiz-report-hint");
+  const reportWindow = window.open("", "_blank");
+  if (!reportWindow) {
+    if (reportHint) {
+      reportHint.textContent = "El navegador bloqueó la ventana del reporte. Permite las ventanas emergentes para imprimir o guardar como PDF.";
+    }
+    return;
+  }
+
+  const percentage = Math.round((score / quizQuestions.length) * 100);
+  const reportRows = quizQuestions.map((question, index) => {
+    const response = quizAnswers[index];
+    const selectedAnswer = response ? question.options[response.selectedIndex] : "Sin respuesta";
+    const correctAnswer = question.options[question.answer];
+    return `
+      <article class="report-question">
+        <h2>${index + 1}. ${escapeHtml(question.question)}</h2>
+        <p><strong>Tu respuesta:</strong> ${escapeHtml(selectedAnswer)}</p>
+        <p><strong>Respuesta correcta:</strong> ${escapeHtml(correctAnswer)}</p>
+        <p class="report-status ${response?.correct ? "correct" : "incorrect"}">${response?.correct ? "Correcta" : "Incorrecta"}</p>
+        <p class="report-explanation">${escapeHtml(question.explanation)}</p>
+      </article>
+    `;
+  }).join("");
+
+  reportWindow.document.open();
+  reportWindow.document.write(`<!doctype html>
+    <html lang="es">
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Reporte del cuestionario BI</title>
+        <style>
+          :root { color-scheme: light; font-family: Arial, sans-serif; color: #111827; }
+          body { max-width: 820px; margin: 36px auto; padding: 0 24px; line-height: 1.55; }
+          header { padding-bottom: 18px; border-bottom: 2px solid #2563EB; }
+          h1 { margin: 0; font-size: 27px; }
+          header p { margin: 6px 0 0; color: #4B5563; }
+          .score { margin: 22px 0; padding: 17px 20px; border: 1px solid #DBEAFE; border-radius: 10px; background: #EFF6FF; }
+          .score strong { color: #1D4ED8; font-size: 24px; }
+          .report-question { padding: 15px 0; border-top: 1px solid #D1D5DB; break-inside: avoid; }
+          h2 { margin: 0 0 8px; font-size: 16px; }
+          .report-question p { margin: 4px 0; font-size: 13px; }
+          .report-status { font-weight: 700; }
+          .report-status.correct { color: #1D4ED8; }
+          .report-status.incorrect { color: #B91C1C; }
+          .report-explanation { color: #4B5563; }
+          .print-button { margin: 0 0 22px; padding: 10px 15px; border: 0; border-radius: 7px; color: #fff; background: #2563EB; font-size: 14px; cursor: pointer; }
+          @media print { body { max-width: none; margin: 0; padding: 0; } .print-button { display: none; } }
+        </style>
+      </head>
+      <body>
+        <button class="print-button" type="button" onclick="window.print()">Imprimir / Guardar como PDF</button>
+        <header>
+          <h1>Reporte del cuestionario BI</h1>
+          <p>Fundamentos de Business Intelligence · ${new Date().toLocaleDateString("es-ES")}</p>
+        </header>
+        <section class="score">
+          <strong>${score} de ${quizQuestions.length} respuestas correctas (${percentage}%)</strong>
+          <p>Este reporte resume tu resultado y las respuestas del cuestionario.</p>
+        </section>
+        <main>${reportRows}</main>
+      </body>
+    </html>`);
+  reportWindow.document.close();
+  reportWindow.focus();
+  window.setTimeout(() => reportWindow.print(), 300);
 }
 
 function resetQuiz() {
@@ -276,25 +366,33 @@ function resetQuiz() {
   selectedOptionIndex = null;
   score = 0;
   answerChecked = false;
+  quizAnswers = [];
   const button = document.getElementById("quiz-next");
+  const reportRow = document.getElementById("quiz-report-row");
+  const reportHint = document.getElementById("quiz-report-hint");
   if (button) button.hidden = false;
+  if (reportRow) reportRow.hidden = true;
+  if (reportHint) reportHint.textContent = "Tu resultado está listo para imprimir o guardar como PDF.";
   renderQuestion();
 }
 
 function initializeQuiz() {
   const button = document.getElementById("quiz-next");
-  if (!button) return;
-  button.addEventListener("click", () => {
-    if (!answerChecked) {
-      checkAnswer();
-    } else if (currentQuestionIndex < quizQuestions.length - 1) {
-      currentQuestionIndex += 1;
-      renderQuestion();
-    } else {
-      renderQuizResult();
-    }
-  });
-  renderQuestion();
+  const reportButton = document.getElementById("quiz-report");
+  if (button) {
+    button.addEventListener("click", () => {
+      if (!answerChecked) {
+        checkAnswer();
+      } else if (currentQuestionIndex < quizQuestions.length - 1) {
+        currentQuestionIndex += 1;
+        renderQuestion();
+      } else {
+        renderQuizResult();
+      }
+    });
+    renderQuestion();
+  }
+  reportButton?.addEventListener("click", printQuizReport);
 }
 
 function createChartOptions() {
@@ -302,20 +400,21 @@ function createChartOptions() {
   return {
     chart: {
       fontFamily,
-      foreColor: "#0B0F19",
+      foreColor: "#9CA3AF",
       toolbar: { show: false },
       animations: { enabled: true, easing: "easeinout", speed: 650 },
       background: "transparent"
     },
-    theme: { mode: "light" },
+    theme: { mode: "dark" },
     grid: {
-      borderColor: "#E5E7EB",
+      borderColor: "rgba(31, 41, 55, 0.3)",
       strokeDashArray: 4,
       padding: { left: 8, right: 10 }
     },
     tooltip: {
       theme: "dark",
-      style: { fontSize: "12px" }
+      style: { fontSize: "12px", fontFamily },
+      marker: { show: true }
     },
     dataLabels: { style: { fontFamily, fontWeight: 600 } },
     noData: { text: "No hay datos disponibles" }
@@ -335,31 +434,41 @@ function renderCharts() {
     return;
   }
 
-  // Personaliza aquí los valores del dashboard. Las gráficas mantienen la paleta azul, negra y blanca.
+  // Personaliza aquí las cifras y los colores de las gráficas (paleta nocturna azul y negro).
   const revenueYears = ["FY2022/23", "FY2023/24", "FY2024/25", "FY2025/26"];
   const revenueValues = [61947, 56864, 69077, 83075];
   const marketCompanies = ["Lenovo", "HP Inc.", "Dell", "Apple", "ASUS", "Acer", "Otros"];
   const marketShares = [27.2, 21.3, 15.3, 9.4, 6.8, 5.8, 14.2];
   const shipmentYears = ["2024", "2025"];
   const shipmentValues = [62542, 73567];
+  const chartColors = {
+    primary: "#2563EB",
+    glow: "#3B82F6",
+    light: "#DBEAFE",
+    white: "#FFFFFF",
+    text: "#9CA3AF",
+    muted: "#6B7280",
+    border: "rgba(31, 41, 55, 0.3)"
+  };
   const growth = ((shipmentValues[1] - shipmentValues[0]) / shipmentValues[0]) * 100;
   const shared = createChartOptions();
 
   const revenueChart = new ApexCharts(revenueElement, {
     ...shared,
     chart: { ...shared.chart, type: "area", height: 285 },
-    colors: ["#0A66C2"],
+    colors: [chartColors.primary],
     series: [{ name: "Ingresos", data: revenueValues }],
     xaxis: {
       categories: revenueYears,
       axisBorder: { show: false },
       axisTicks: { show: false },
-      labels: { style: { colors: "#6B7280", fontSize: "10px" } }
+      labels: { style: { colors: chartColors.text, fontSize: "10px" } },
+      tooltip: { enabled: false }
     },
     yaxis: {
       min: 0,
       labels: {
-        style: { colors: "#6B7280", fontSize: "10px" },
+        style: { colors: chartColors.text, fontSize: "10px" },
         formatter: (value) => `${Math.round(value / 1000)}k`
       }
     },
@@ -367,20 +476,20 @@ function renderCharts() {
     fill: {
       type: "gradient",
       gradient: {
-        shade: "light",
+        shade: "dark",
         type: "vertical",
-        shadeIntensity: 0.25,
-        gradientToColors: ["#DBEAFE"],
+        shadeIntensity: 0.12,
+        gradientToColors: [chartColors.glow],
         inverseColors: false,
-        opacityFrom: 0.42,
-        opacityTo: 0.04,
+        opacityFrom: 0.2,
+        opacityTo: 0.015,
         stops: [0, 100]
       }
     },
     markers: {
       size: 4,
-      colors: ["#FFFFFF"],
-      strokeColors: "#0A66C2",
+      colors: [chartColors.white],
+      strokeColors: chartColors.primary,
       strokeWidth: 2,
       hover: { size: 6 }
     },
@@ -395,7 +504,7 @@ function renderCharts() {
     ...shared,
     chart: { ...shared.chart, type: "bar", height: 330 },
     series: [{ name: "Cuota de mercado", data: marketShares }],
-    colors: ["#0A66C2", "#6B7280", "#6B7280", "#6B7280", "#6B7280", "#6B7280", "#6B7280"],
+    colors: [chartColors.primary, chartColors.muted, chartColors.muted, chartColors.muted, chartColors.muted, chartColors.muted, chartColors.muted],
     plotOptions: {
       bar: {
         horizontal: true,
@@ -410,13 +519,13 @@ function renderCharts() {
       max: 32,
       tickAmount: 4,
       labels: {
-        style: { colors: "#6B7280", fontSize: "10px" },
+        style: { colors: chartColors.text, fontSize: "10px" },
         formatter: (value) => `${value}%`
       },
       axisBorder: { show: false },
       axisTicks: { show: false }
     },
-    yaxis: { labels: { style: { colors: "#0B0F19", fontSize: "11px", fontWeight: 600 } } },
+    yaxis: { labels: { style: { colors: chartColors.text, fontSize: "11px", fontWeight: 600 } } },
     grid: { ...shared.grid, padding: { left: 5, right: 30 } },
     legend: { show: false },
     dataLabels: {
@@ -424,7 +533,7 @@ function renderCharts() {
       enabled: true,
       formatter: (value) => `${value}%`,
       offsetX: 5,
-      style: { colors: ["#0B0F19"], fontSize: "10px", fontWeight: 700 }
+      style: { colors: [chartColors.light], fontSize: "10px", fontWeight: 650 }
     },
     tooltip: { ...shared.tooltip, y: { formatter: (value) => `${value}%` } }
   });
@@ -434,13 +543,13 @@ function renderCharts() {
     chart: { ...shared.chart, type: "donut", height: 285 },
     series: shipmentValues,
     labels: shipmentYears,
-    colors: ["#0A66C2", "#DBEAFE"],
-    stroke: { colors: ["#FFFFFF"], width: 3 },
+    colors: [chartColors.primary, chartColors.glow],
+    stroke: { colors: ["#111827"], width: 3 },
     legend: {
       show: true,
       position: "bottom",
       fontSize: "11px",
-      labels: { colors: "#0B0F19" },
+      labels: { colors: chartColors.text },
       markers: { width: 8, height: 8, radius: 8 },
       itemMargin: { horizontal: 12, vertical: 4 }
     },
@@ -448,7 +557,7 @@ function renderCharts() {
       ...shared.dataLabels,
       enabled: true,
       formatter: (percentage) => `${percentage.toFixed(1)}%`,
-      style: { colors: ["#0B0F19"], fontSize: "10px", fontWeight: 700 },
+      style: { colors: [chartColors.white], fontSize: "10px", fontWeight: 650 },
       dropShadow: { enabled: false }
     },
     plotOptions: {
@@ -460,15 +569,15 @@ function renderCharts() {
             name: {
               show: true,
               offsetY: 17,
-              color: "#6B7280",
+              color: chartColors.text,
               formatter: () => "Crecimiento"
             },
             value: {
               show: true,
               offsetY: -12,
-              color: "#0B0F19",
-              fontSize: "23px",
-              fontWeight: 750,
+              color: chartColors.white,
+              fontSize: "21px",
+              fontWeight: 650,
               formatter: () => `+${growth.toFixed(1)}%`
             },
             total: { show: false }
@@ -490,6 +599,12 @@ function initializeNavigation() {
   const links = document.getElementById("nav-links");
   if (!toggle || !links) return;
 
+  const closeMenu = () => {
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "Abrir navegación");
+    links.classList.remove("is-open");
+  };
+
   toggle.addEventListener("click", () => {
     const isOpen = toggle.getAttribute("aria-expanded") === "true";
     toggle.setAttribute("aria-expanded", String(!isOpen));
@@ -498,11 +613,43 @@ function initializeNavigation() {
   });
 
   links.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      toggle.setAttribute("aria-expanded", "false");
-      toggle.setAttribute("aria-label", "Abrir navegación");
-      links.classList.remove("is-open");
-    });
+    link.addEventListener("click", closeMenu);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+      closeMenu();
+      toggle.focus();
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 640 && toggle.getAttribute("aria-expanded") === "true") closeMenu();
+  });
+}
+
+function initializeThemeToggle() {
+  const toggle = document.getElementById("theme-toggle");
+  if (!toggle) return;
+
+  const updateThemeControl = (isOled) => {
+    const label = isOled ? "Cambiar al tema oscuro azul" : "Cambiar a negro puro (modo OLED)";
+    toggle.setAttribute("aria-pressed", String(isOled));
+    toggle.setAttribute("aria-label", label);
+    toggle.title = label;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", isOled ? "#000000" : "#0A0E1A");
+  };
+
+  const isOled = document.documentElement.dataset.theme === "oled";
+  updateThemeControl(isOled);
+  toggle.addEventListener("click", () => {
+    const nextIsOled = document.documentElement.dataset.theme !== "oled";
+    if (nextIsOled) {
+      document.documentElement.dataset.theme = "oled";
+    } else {
+      delete document.documentElement.dataset.theme;
+    }
+    updateThemeControl(nextIsOled);
   });
 }
 
@@ -528,6 +675,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadTheoryContent();
   initializeQuiz();
   initializeNavigation();
+  initializeThemeToggle();
   initializeScrollReveal();
   renderCharts();
 });

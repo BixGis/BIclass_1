@@ -4,29 +4,44 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Aprende fundamentos de Business Intelligence, toma de decisiones basada en datos y procesos ETL con contenido práctico y un dashboard interactivo de Lenovo.">
-    <meta name="theme-color" content="#0B0F19">
-    <title>BI esencial | Fundamentos de Business Intelligence</title>
+    <meta name="theme-color" content="#0A0E1A">
+    <title>BI Fundamentals | Aprende Business Intelligence</title>
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts" defer></script>
     <script src="js/main.js" defer></script>
   </head>
   <body>
-    <!-- Sitio estático para Codespaces: ejecuta `python3 -m http.server 3000` o `npx serve -l 3000` y abre el puerto 3000. No requiere dependencias de Node.js ni herramientas de compilación. -->
+    <!-- Codespaces: ejecuta `python3 -m http.server 3000` y abre el puerto 3000 desde la pestaña PORTS. Alternativa: `npx serve -l 3000`. Sitio estático; no requiere dependencias ni herramientas de compilación. -->
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
     <header class="site-header">
       <nav class="navbar container" aria-label="Navegación principal">
         <a class="brand" href="#inicio" aria-label="BI esencial, inicio">
-          <span class="brand-mark" aria-hidden="true">BI</span>
-          <span>BI<span class="brand-accent">esencial</span></span>
+          <svg class="brand-mark" aria-hidden="true" viewBox="0 0 32 32" fill="none">
+            <path d="M6 24V17M13 24V11M20 24V7M27 24V14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span>BI <span class="brand-accent">Fundamentals</span></span>
         </a>
-        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir navegación">
-          <span></span><span></span><span></span>
-        </button>
         <div class="nav-links" id="nav-links">
           <a href="#fundamentos">Fundamentos</a>
           <a href="#cuestionario">Cuestionario</a>
           <a href="#dashboard">Dashboard Lenovo</a>
+          <a class="nav-mobile-cta" href="#cuestionario">Empezar el cuestionario <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="nav-actions">
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Cambiar a negro puro (modo OLED)" title="Cambiar a negro puro (modo OLED)">
+            <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M20.2 15.1A8.5 8.5 0 0 1 8.9 3.8 8.6 8.6 0 1 0 20.2 15.1Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <svg class="theme-icon theme-icon-oled" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/>
+              <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir navegación">
+            <span></span><span></span><span></span>
+          </button>
+          <a class="nav-cta" href="#cuestionario">Empezar</a>
         </div>
       </nav>
     </header>
@@ -34,29 +49,67 @@
     <main id="contenido">
       <section class="hero" id="inicio">
         <div class="container hero-content reveal">
-          <p class="eyebrow"><span class="eyebrow-dot"></span> Aprendizaje práctico · Datos para decidir</p>
-          <h1>Convierte los datos<br>en <span>mejores decisiones.</span></h1>
-          <p class="hero-copy">Explora los fundamentos de Business Intelligence, entiende el proceso ETL y pon a prueba tus conocimientos con un dashboard interactivo.</p>
+          <a class="hero-badge" href="#dashboard">
+            <span class="badge-dot" aria-hidden="true"></span>
+            Nuevo · Cuestionario interactivo + Dashboard Lenovo
+            <span aria-hidden="true">→</span>
+          </a>
+          <h1>Aprende Business Intelligence<br><span>tomando decisiones con datos.</span></h1>
+          <p class="hero-copy">Domina los fundamentos de BI, comprende los procesos ETL y convierte los datos en decisiones de negocio con más confianza.</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#fundamentos">Explorar fundamentos <span aria-hidden="true">→</span></a>
-            <a class="button button-quiet" href="#dashboard">Ver dashboard</a>
+            <a class="button button-primary" href="#cuestionario">Empezar el cuestionario <span aria-hidden="true">→</span></a>
+            <a class="button button-quiet" href="#dashboard">Ver Dashboard Lenovo</a>
           </div>
           <div class="hero-proof" aria-label="Contenido de aprendizaje">
-            <span><strong>02</strong> módulos de estudio</span>
-            <span><strong>05</strong> preguntas interactivas</span>
-            <span><strong>03</strong> visualizaciones</span>
+            <span>6 KPIs</span><i aria-hidden="true"></i><span>3 gráficas interactivas</span><i aria-hidden="true"></i><span>5 preguntas prácticas</span>
           </div>
         </div>
-        <div class="hero-orbit hero-orbit-one" aria-hidden="true"></div>
-        <div class="hero-orbit hero-orbit-two" aria-hidden="true"></div>
+      </section>
+
+      <section class="section features-section" id="aprendizaje">
+        <div class="container">
+          <div class="section-heading reveal">
+            <p class="eyebrow eyebrow-dark">Una base sólida para decidir</p>
+            <h2>¿Qué aprenderás?</h2>
+            <p>Conceptos esenciales y prácticos para convertir datos en mejores decisiones.</p>
+          </div>
+          <div class="features-grid">
+            <article class="feature-card reveal">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 19.5V5m0 14.5h16M7.5 15l3.2-3.6 2.6 2.1 4.8-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M15.5 7.5h2.8v2.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <h3>Toma de decisiones con datos</h3>
+              <p>Pasa de la intuición al análisis: define preguntas, evalúa evidencia y mide el impacto de tus decisiones.</p>
+              <a href="#fundamentos">Explorar fundamentos <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="feature-card reveal">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 7h5m4 0h5M8 4l-3 3 3 3m8 4h-5m-4 0H5m11-3 3 3-3 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <h3>Procesos ETL</h3>
+              <p>Aprende a extraer, transformar y cargar datos de distintas fuentes para un análisis confiable.</p>
+              <a href="#fundamentos">Explorar ETL <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="feature-card reveal">
+              <svg class="feature-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4.5 19.5h15m-13-3V11m5 5.5V6m5 10.5v-8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M5 7.5 11.5 4l6 2 2-1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <h3>KPIs y modelado</h3>
+              <p>Organiza hechos y dimensiones; define indicadores que expliquen el rendimiento y guíen acciones.</p>
+              <a href="#fundamentos">Explorar KPIs <span aria-hidden="true">→</span></a>
+            </article>
+          </div>
+        </div>
       </section>
 
       <section class="section fundamentals-section" id="fundamentos">
         <div class="container">
           <div class="section-heading reveal">
-            <p class="eyebrow eyebrow-dark">01 / Aprende</p>
-            <h2>Fundamentos de BI</h2>
-            <p>Dos módulos breves para conectar los conceptos con decisiones y procesos reales.</p>
+            <p class="eyebrow eyebrow-dark">Explora el contenido</p>
+            <h2>Fundamentos para llevar a la práctica</h2>
+            <p>Dos módulos breves para conectar los conceptos de BI con decisiones y procesos reales.</p>
           </div>
           <div class="learning-grid">
             <article class="learning-card reveal">
@@ -114,6 +167,16 @@
             </div>
             <div class="quiz-feedback" id="quiz-feedback" aria-live="polite"></div>
           </div>
+        </div>
+        <div class="container quiz-report-row" id="quiz-report-row" hidden>
+          <p id="quiz-report-hint" aria-live="polite">Tu resultado está listo para imprimir o guardar como PDF.</p>
+          <button class="button button-quiet report-button" id="quiz-report" type="button">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M7 8V3h10v5M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7 14h10v7H7z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            </svg>
+            Imprimir reporte / Guardar como PDF
+          </button>
         </div>
       </section>
 
@@ -183,13 +246,11 @@
         </div>
       </section>
 
-      <section class="section takeaways-section">
-        <div class="container takeaway-row reveal">
-          <div>
-            <p class="eyebrow eyebrow-dark">Una idea para llevar</p>
-            <h2>El valor no está en tener más datos.<br><span>Está en hacer mejores preguntas.</span></h2>
-          </div>
-          <a class="button button-primary" href="#inicio">Volver al inicio <span aria-hidden="true">↑</span></a>
+      <section class="final-cta" id="empezar">
+        <div class="container final-cta-content reveal">
+          <p class="eyebrow eyebrow-dark">Tu siguiente decisión empieza aquí</p>
+          <h2>Pon a prueba tu conocimiento</h2>
+          <a class="button button-primary" href="#cuestionario">Empezar el cuestionario <span aria-hidden="true">→</span></a>
         </div>
       </section>
     </main>
@@ -197,15 +258,21 @@
     <footer class="site-footer">
       <div class="container footer-content">
         <a class="brand footer-brand" href="#inicio">
-          <span class="brand-mark" aria-hidden="true">BI</span>
-          <span>BI<span class="brand-accent">esencial</span></span>
+          <svg class="brand-mark" aria-hidden="true" viewBox="0 0 32 32" fill="none">
+            <path d="M6 24V17M13 24V11M20 24V7M27 24V14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span>BI <span class="brand-accent">Fundamentals</span></span>
         </a>
         <p>Material educativo · Fundamentos de Business Intelligence</p>
-        <a class="footer-link" href="#fundamentos">Volver a fundamentos ↑</a>
+        <div class="footer-links">
+          <a class="footer-link" href="#fundamentos">Fundamentos</a>
+          <a class="footer-link" href="#cuestionario">Cuestionario</a>
+          <a class="footer-link" href="#dashboard">Dashboard Lenovo</a>
+        </div>
       </div>
       <div class="container footer-bottom">
         <span>Aprender · Analizar · Decidir</span>
-        <span>Hecho para aprender con datos.</span>
+        <span>© 2026 BI Fundamentals · Aprende · Analiza · Decide</span>
       </div>
     </footer>
   </body>
