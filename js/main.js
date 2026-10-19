@@ -63,6 +63,7 @@ let selectedOptionIndex = null;
 let score = 0;
 let answerChecked = false;
 let quizAnswers = [];
+let dashboardCharts = [];
 
 function renderMarkdown(markdown) {
   const escapeHtml = (text) => text
@@ -397,22 +398,23 @@ function initializeQuiz() {
 
 function createChartOptions() {
   const fontFamily = getComputedStyle(document.body).fontFamily;
+  const isDark = document.documentElement.dataset.theme === "dark";
   return {
     chart: {
       fontFamily,
-      foreColor: "#9CA3AF",
+      foreColor: isDark ? "#9CA3AF" : "#4B5563",
       toolbar: { show: false },
       animations: { enabled: true, easing: "easeinout", speed: 650 },
       background: "transparent"
     },
-    theme: { mode: "dark" },
+    theme: { mode: isDark ? "dark" : "light" },
     grid: {
-      borderColor: "rgba(31, 41, 55, 0.3)",
+      borderColor: isDark ? "rgba(31, 41, 55, 0.3)" : "#E5E7EB",
       strokeDashArray: 4,
       padding: { left: 8, right: 10 }
     },
     tooltip: {
-      theme: "dark",
+      theme: isDark ? "dark" : "light",
       style: { fontSize: "12px", fontFamily },
       marker: { show: true }
     },
@@ -441,14 +443,16 @@ function renderCharts() {
   const marketShares = [27.2, 21.3, 15.3, 9.4, 6.8, 5.8, 14.2];
   const shipmentYears = ["2024", "2025"];
   const shipmentValues = [62542, 73567];
+  const isDark = document.documentElement.dataset.theme === "dark";
   const chartColors = {
     primary: "#2563EB",
     glow: "#3B82F6",
     light: "#DBEAFE",
     white: "#FFFFFF",
-    text: "#9CA3AF",
+    text: isDark ? "#9CA3AF" : "#4B5563",
     muted: "#6B7280",
-    border: "rgba(31, 41, 55, 0.3)"
+    border: isDark ? "rgba(31, 41, 55, 0.3)" : "#E5E7EB",
+    surface: isDark ? "#111827" : "#FFFFFF"
   };
   const growth = ((shipmentValues[1] - shipmentValues[0]) / shipmentValues[0]) * 100;
   const shared = createChartOptions();
@@ -544,7 +548,7 @@ function renderCharts() {
     series: shipmentValues,
     labels: shipmentYears,
     colors: [chartColors.primary, chartColors.glow],
-    stroke: { colors: ["#111827"], width: 3 },
+    stroke: { colors: [chartColors.surface], width: 3 },
     legend: {
       show: true,
       position: "bottom",
@@ -591,7 +595,37 @@ function renderCharts() {
     }
   });
 
-  [revenueChart, marketChart, shipmentsChart].forEach((chart) => chart.render());
+  dashboardCharts = [revenueChart, marketChart, shipmentsChart];
+  dashboardCharts.forEach((chart) => chart.render());
+}
+
+function updateDashboardChartTheme(isDark) {
+  const textColor = isDark ? "#9CA3AF" : "#4B5563";
+  const gridColor = isDark ? "rgba(31, 41, 55, 0.3)" : "#E5E7EB";
+  const tooltipTheme = isDark ? "dark" : "light";
+  const donutTextColor = isDark ? "#FFFFFF" : "#111827";
+
+  dashboardCharts.forEach((chart) => {
+    chart.updateOptions({
+      chart: { foreColor: textColor },
+      theme: { mode: tooltipTheme },
+      grid: { borderColor: gridColor },
+      tooltip: { theme: tooltipTheme },
+      xaxis: { labels: { style: { colors: textColor } } },
+      yaxis: { labels: { style: { colors: textColor } } },
+      legend: { labels: { colors: textColor } },
+      plotOptions: {
+        pie: {
+          donut: {
+            labels: {
+              name: { color: textColor },
+              value: { color: donutTextColor }
+            }
+          }
+        }
+      }
+    }, false, true);
+  });
 }
 
 function initializeNavigation() {
@@ -632,24 +666,25 @@ function initializeThemeToggle() {
   const toggle = document.getElementById("theme-toggle");
   if (!toggle) return;
 
-  const updateThemeControl = (isOled) => {
-    const label = isOled ? "Cambiar al tema oscuro azul" : "Cambiar a negro puro (modo OLED)";
-    toggle.setAttribute("aria-pressed", String(isOled));
+  const updateThemeControl = (isDark) => {
+    const label = isDark ? "Cambiar al tema de día" : "Cambiar al tema oscuro";
+    toggle.setAttribute("aria-pressed", String(isDark));
     toggle.setAttribute("aria-label", label);
     toggle.title = label;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", isOled ? "#000000" : "#0A0E1A");
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", isDark ? "#0A0E1A" : "#FFFFFF");
   };
 
-  const isOled = document.documentElement.dataset.theme === "oled";
-  updateThemeControl(isOled);
+  const isDark = document.documentElement.dataset.theme === "dark";
+  updateThemeControl(isDark);
   toggle.addEventListener("click", () => {
-    const nextIsOled = document.documentElement.dataset.theme !== "oled";
-    if (nextIsOled) {
-      document.documentElement.dataset.theme = "oled";
+    const nextIsDark = document.documentElement.dataset.theme !== "dark";
+    if (nextIsDark) {
+      document.documentElement.dataset.theme = "dark";
     } else {
       delete document.documentElement.dataset.theme;
     }
-    updateThemeControl(nextIsOled);
+    updateThemeControl(nextIsDark);
+    updateDashboardChartTheme(nextIsDark);
   });
 }
 
