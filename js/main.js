@@ -2,59 +2,59 @@
 
 const quizQuestions = [
   {
-    question: "¿Qué distingue principalmente una decisión data-driven de una decisión intuitiva?",
+    question: "¿Qué fase del ETL se encarga de limpiar y normalizar los datos?",
     options: [
-      "Se basa en evidencia y análisis de datos, además del criterio profesional.",
-      "Elimina por completo la experiencia de las personas.",
-      "Se toma más rápido porque no necesita definir un problema.",
-      "Solo utiliza datos financieros históricos."
+      "Extract, porque obtiene los registros de las fuentes.",
+      "Transform, porque estandariza y prepara los datos.",
+      "Load, porque almacena los datos en el destino.",
+      "Report, porque presenta los resultados."
     ],
-    answer: 0,
-    explanation: "Una decisión data-driven usa datos relevantes para fundamentar la elección, sin sustituir el contexto ni el juicio humano."
+    answer: 1,
+    explanation: "Transform limpia, normaliza y combina los datos antes de cargarlos al almacén analítico."
   },
   {
-    question: "En un proceso ETL, ¿qué ocurre durante la fase Transform?",
+    question: "¿Cuál es un ejemplo de decisión data-driven?",
     options: [
-      "Se guardan los datos ya preparados en el Data Warehouse.",
-      "Se extraen los datos de CRM, ERP y otras fuentes.",
-      "Se limpian, normalizan y combinan los datos para su análisis.",
-      "Se convierten las métricas en decisiones automáticamente."
+      "Cambiar una campaña solo porque una persona prefiere otro diseño.",
+      "Mantener un proceso sin medir sus resultados.",
+      "Elegir una acción después de comparar evidencia y resultados medibles.",
+      "Copiar la decisión de otra empresa sin validar el contexto."
     ],
     answer: 2,
-    explanation: "Transform es la fase en la que se corrigen formatos, duplicados y valores, y se armonizan los datos antes de cargarlos."
+    explanation: "Una decisión basada en datos contrasta alternativas con evidencia pertinente, sin reemplazar el contexto ni el criterio profesional."
   },
   {
-    question: "¿Cuál es una ventaja de integrar ventas de tienda física y e-commerce en un mismo proceso ETL?",
+    question: "En un modelo dimensional, ¿qué representa una tabla de hechos?",
     options: [
-      "Evitar que cada canal tenga que registrar transacciones.",
-      "Obtener un reporte unificado con definiciones y formatos consistentes.",
-      "Reemplazar el sistema de ventas por una hoja de cálculo.",
-      "Guardar los datos únicamente en el CRM."
-    ],
-    answer: 1,
-    explanation: "La integración alinea campos, fechas, productos y monedas para comparar los canales desde una fuente analítica común."
-  },
-  {
-    question: "En un modelo dimensional de ventas, ¿cuál es un ejemplo de dimensión?",
-    options: [
-      "Unidades vendidas por transacción.",
-      "Ingresos totales calculados para un período.",
-      "Margen bruto de cada pedido.",
-      "Cliente, producto o tiempo."
+      "Atributos descriptivos como marca, categoría o región.",
+      "Las relaciones jerárquicas entre categorías.",
+      "Las reglas de acceso de los usuarios.",
+      "Eventos medibles del negocio, como ventas, unidades e importe."
     ],
     answer: 3,
-    explanation: "Las dimensiones describen el contexto de los hechos. Cliente, producto y tiempo permiten analizar las ventas desde distintas perspectivas."
+    explanation: "La tabla de hechos registra eventos al grano definido y contiene medidas de negocio y claves hacia sus dimensiones."
   },
   {
-    question: "¿Qué expresa el valor de vida del cliente (CLV)?",
+    question: "¿Qué KPI estima el valor económico que aporta un cliente a lo largo del tiempo?",
     options: [
-      "La proporción de visitantes que completa una compra en una sesión.",
-      "La contribución económica esperada de la relación con un cliente a lo largo del tiempo.",
-      "El porcentaje de ventas de una empresa frente a todo el mercado.",
-      "La diferencia entre ingresos por ventas y costo de los bienes vendidos."
+      "Tasa de conversión.",
+      "Valor de vida del cliente (CLV).",
+      "Cuota de mercado.",
+      "Margen bruto."
     ],
     answer: 1,
-    explanation: "El CLV estima el valor económico de la relación con un cliente durante su ciclo de vida; es útil para orientar retención e inversión."
+    explanation: "El CLV estima el valor económico de la relación con un cliente durante un horizonte o ciclo de vida definido."
+  },
+  {
+    question: "¿Cuál es un error común en proyectos de Business Intelligence?",
+    options: [
+      "Documentar las definiciones de los indicadores.",
+      "Validar los datos con las áreas responsables.",
+      "Usar KPIs mal definidos con fórmulas distintas entre equipos.",
+      "Capacitar a las personas que utilizarán el dashboard."
+    ],
+    answer: 2,
+    explanation: "Si los KPIs carecen de una definición compartida de fórmula, período y población, las comparaciones pierden consistencia."
   }
 ];
 
@@ -64,6 +64,7 @@ let score = 0;
 let answerChecked = false;
 let quizAnswers = [];
 let dashboardCharts = [];
+let syllabusCountdownTimer = null;
 
 function renderMarkdown(markdown) {
   const escapeHtml = (text) => text
@@ -396,25 +397,43 @@ function initializeQuiz() {
   reportButton?.addEventListener("click", printQuizReport);
 }
 
+function getThemeVariable(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+function getChartPalette() {
+  return {
+    primary: getThemeVariable("--azul-primario"),
+    glow: getThemeVariable("--azul-glow"),
+    light: getThemeVariable("--azul-claro"),
+    foreground: getThemeVariable("--texto-principal"),
+    text: getThemeVariable("--texto-secundario"),
+    muted: getThemeVariable("--chart-muted"),
+    grid: getThemeVariable("--chart-grid"),
+    surface: getThemeVariable("--bg-superficie")
+  };
+}
+
 function createChartOptions() {
   const fontFamily = getComputedStyle(document.body).fontFamily;
-  const isDark = document.documentElement.dataset.theme === "dark";
+  const theme = document.documentElement.dataset.theme || "dark";
+  const palette = getChartPalette();
   return {
     chart: {
       fontFamily,
-      foreColor: isDark ? "#9CA3AF" : "#4B5563",
+      foreColor: palette.text,
       toolbar: { show: false },
       animations: { enabled: true, easing: "easeinout", speed: 650 },
       background: "transparent"
     },
-    theme: { mode: isDark ? "dark" : "light" },
+    theme: { mode: theme },
     grid: {
-      borderColor: isDark ? "rgba(31, 41, 55, 0.3)" : "#E5E7EB",
+      borderColor: palette.grid,
       strokeDashArray: 4,
       padding: { left: 8, right: 10 }
     },
     tooltip: {
-      theme: isDark ? "dark" : "light",
+      theme,
       style: { fontSize: "12px", fontFamily },
       marker: { show: true }
     },
@@ -436,24 +455,14 @@ function renderCharts() {
     return;
   }
 
-  // Personaliza aquí las cifras y los colores de las gráficas (paleta nocturna azul y negro).
+  // Personaliza aquí las cifras; los colores se leen de los tokens CSS de tema.
   const revenueYears = ["FY2022/23", "FY2023/24", "FY2024/25", "FY2025/26"];
   const revenueValues = [61947, 56864, 69077, 83075];
   const marketCompanies = ["Lenovo", "HP Inc.", "Dell", "Apple", "ASUS", "Acer", "Otros"];
   const marketShares = [27.2, 21.3, 15.3, 9.4, 6.8, 5.8, 14.2];
   const shipmentYears = ["2024", "2025"];
   const shipmentValues = [62542, 73567];
-  const isDark = document.documentElement.dataset.theme === "dark";
-  const chartColors = {
-    primary: "#2563EB",
-    glow: "#3B82F6",
-    light: "#DBEAFE",
-    white: "#FFFFFF",
-    text: isDark ? "#9CA3AF" : "#4B5563",
-    muted: "#6B7280",
-    border: isDark ? "rgba(31, 41, 55, 0.3)" : "#E5E7EB",
-    surface: isDark ? "#111827" : "#FFFFFF"
-  };
+  const chartColors = getChartPalette();
   const growth = ((shipmentValues[1] - shipmentValues[0]) / shipmentValues[0]) * 100;
   const shared = createChartOptions();
 
@@ -483,7 +492,7 @@ function renderCharts() {
         shade: "dark",
         type: "vertical",
         shadeIntensity: 0.12,
-        gradientToColors: [chartColors.glow],
+        gradientToColors: [chartColors.light],
         inverseColors: false,
         opacityFrom: 0.2,
         opacityTo: 0.015,
@@ -492,7 +501,7 @@ function renderCharts() {
     },
     markers: {
       size: 4,
-      colors: [chartColors.white],
+      colors: [chartColors.surface],
       strokeColors: chartColors.primary,
       strokeWidth: 2,
       hover: { size: 6 }
@@ -537,7 +546,7 @@ function renderCharts() {
       enabled: true,
       formatter: (value) => `${value}%`,
       offsetX: 5,
-      style: { colors: [chartColors.light], fontSize: "10px", fontWeight: 650 }
+      style: { colors: [chartColors.foreground], fontSize: "10px", fontWeight: 650 }
     },
     tooltip: { ...shared.tooltip, y: { formatter: (value) => `${value}%` } }
   });
@@ -561,7 +570,7 @@ function renderCharts() {
       ...shared.dataLabels,
       enabled: true,
       formatter: (percentage) => `${percentage.toFixed(1)}%`,
-      style: { colors: [chartColors.white], fontSize: "10px", fontWeight: 650 },
+      style: { colors: [chartColors.foreground], fontSize: "10px", fontWeight: 650 },
       dropShadow: { enabled: false }
     },
     plotOptions: {
@@ -579,7 +588,7 @@ function renderCharts() {
             value: {
               show: true,
               offsetY: -12,
-              color: chartColors.white,
+              color: chartColors.foreground,
               fontSize: "21px",
               fontWeight: 650,
               formatter: () => `+${growth.toFixed(1)}%`
@@ -599,32 +608,33 @@ function renderCharts() {
   dashboardCharts.forEach((chart) => chart.render());
 }
 
-function updateDashboardChartTheme(isDark) {
-  const textColor = isDark ? "#9CA3AF" : "#4B5563";
-  const gridColor = isDark ? "rgba(31, 41, 55, 0.3)" : "#E5E7EB";
-  const tooltipTheme = isDark ? "dark" : "light";
-  const donutTextColor = isDark ? "#FFFFFF" : "#111827";
-
-  dashboardCharts.forEach((chart) => {
+function updateDashboardChartTheme(theme) {
+  const palette = getChartPalette();
+  dashboardCharts.forEach((chart, index) => {
+    const chartColors = index === 1
+      ? [palette.primary, palette.muted, palette.muted, palette.muted, palette.muted, palette.muted, palette.muted]
+      : index === 2 ? [palette.primary, palette.glow] : [palette.primary];
     chart.updateOptions({
-      chart: { foreColor: textColor },
-      theme: { mode: tooltipTheme },
-      grid: { borderColor: gridColor },
-      tooltip: { theme: tooltipTheme },
-      xaxis: { labels: { style: { colors: textColor } } },
-      yaxis: { labels: { style: { colors: textColor } } },
-      legend: { labels: { colors: textColor } },
+      chart: { foreColor: palette.text },
+      theme: { mode: theme },
+      colors: chartColors,
+      grid: { borderColor: palette.grid },
+      tooltip: { theme },
+      xaxis: { labels: { style: { colors: palette.text } } },
+      yaxis: { labels: { style: { colors: palette.text } } },
+      legend: { labels: { colors: palette.text } },
+      dataLabels: { style: { colors: [palette.foreground] } },
       plotOptions: {
         pie: {
           donut: {
             labels: {
-              name: { color: textColor },
-              value: { color: donutTextColor }
+              name: { color: palette.text },
+              value: { color: palette.foreground }
             }
           }
         }
       }
-    }, false, true);
+    }, true, true);
   });
 }
 
@@ -662,30 +672,247 @@ function initializeNavigation() {
   });
 }
 
-function initializeThemeToggle() {
+function updateThemeIcon(theme) {
   const toggle = document.getElementById("theme-toggle");
   if (!toggle) return;
 
-  const updateThemeControl = (isDark) => {
-    const label = isDark ? "Cambiar al tema de día" : "Cambiar al tema oscuro";
-    toggle.setAttribute("aria-pressed", String(isDark));
-    toggle.setAttribute("aria-label", label);
-    toggle.title = label;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", isDark ? "#0A0E1A" : "#FFFFFF");
+  toggle.setAttribute("aria-label", "Cambiar tema");
+  toggle.setAttribute("aria-pressed", String(theme === "dark"));
+  toggle.title = theme === "dark" ? "Cambiar al tema claro" : "Cambiar al tema oscuro";
+  toggle.classList.add("is-changing");
+  window.setTimeout(() => toggle.classList.remove("is-changing"), 200);
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme === "dark" ? "#0A0E1A" : "#FFFFFF");
+}
+
+function applyTheme(theme) {
+  const safeTheme = theme === "light" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", safeTheme);
+  updateThemeIcon(safeTheme);
+  updateDashboardChartTheme(safeTheme);
+}
+
+function toggleTheme() {
+  const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  try {
+    localStorage.setItem("tema", nextTheme);
+  } catch (error) {
+    console.error("No se pudo guardar la preferencia de tema.", error);
+  }
+  applyTheme(nextTheme);
+}
+
+function initTheme() {
+  const themeToggle = document.getElementById("theme-toggle");
+  let storedTheme = null;
+  try {
+    storedTheme = localStorage.getItem("tema");
+  } catch (error) {
+    console.error("No se pudo leer la preferencia de tema.", error);
+  }
+
+  const media = window.matchMedia("(prefers-color-scheme: light)");
+  const currentTheme = storedTheme === "light" || storedTheme === "dark"
+    ? storedTheme
+    : (media.matches ? "light" : "dark");
+  applyTheme(currentTheme);
+  themeToggle?.addEventListener("click", toggleTheme);
+
+  const handleSystemThemeChange = (event) => {
+    let manualTheme = null;
+    try {
+      manualTheme = localStorage.getItem("tema");
+    } catch (error) {
+      console.error("No se pudo comprobar la preferencia manual de tema.", error);
+    }
+    if (manualTheme !== "light" && manualTheme !== "dark") {
+      applyTheme(event.matches ? "light" : "dark");
+    }
+  };
+  if (media.addEventListener) {
+    media.addEventListener("change", handleSystemThemeChange);
+  } else {
+    media.addListener(handleSystemThemeChange);
+  }
+}
+
+function initCountdown() {
+  const list = document.getElementById("evaluation-list");
+  const nextLabel = document.getElementById("next-evaluation");
+  if (!list || !nextLabel) return;
+
+  // Personaliza aquí las fechas oficiales de las evaluaciones del período.
+  const evaluations = [
+    { name: "EVAL 1", date: new Date("2026-11-22T23:59:59") },
+    { name: "EVAL 2", date: new Date("2027-01-10T23:59:59") },
+    { name: "EVAL 3", date: new Date("2027-02-14T23:59:59") }
+  ];
+  const parts = {
+    days: document.getElementById("countdown-days"),
+    hours: document.getElementById("countdown-hours"),
+    minutes: document.getElementById("countdown-minutes"),
+    seconds: document.getElementById("countdown-seconds")
+  };
+  const listItems = Array.from(list.querySelectorAll("[data-evaluation-date]"));
+
+  const update = () => {
+    const now = Date.now();
+    const nextIndex = evaluations.findIndex((evaluation) => evaluation.date.getTime() > now);
+    listItems.forEach((item, index) => {
+      const status = index < nextIndex || nextIndex === -1 ? "done" : index === nextIndex ? "next" : "future";
+      item.classList.remove("is-done", "is-next", "is-future");
+      item.classList.add(`is-${status}`);
+      const label = item.querySelector(".evaluation-status");
+      if (label) label.textContent = status === "done" ? "Realizada" : status === "next" ? "Próxima" : "Futura";
+      item.setAttribute("aria-label", `${evaluations[index].name}: ${label?.textContent || ""}`);
+    });
+
+    if (nextIndex === -1) {
+      nextLabel.textContent = "Período de evaluaciones completado";
+      Object.values(parts).forEach((part) => { if (part) part.textContent = "00"; });
+      return;
+    }
+
+    const nextEvaluation = evaluations[nextIndex];
+    nextLabel.textContent = nextEvaluation.name;
+    let remaining = Math.max(0, nextEvaluation.date.getTime() - now);
+    const day = 24 * 60 * 60 * 1000;
+    const hour = 60 * 60 * 1000;
+    const minute = 60 * 1000;
+    const days = Math.floor(remaining / day);
+    remaining %= day;
+    const hours = Math.floor(remaining / hour);
+    remaining %= hour;
+    const minutes = Math.floor(remaining / minute);
+    const seconds = Math.floor((remaining % minute) / 1000);
+    if (parts.days) parts.days.textContent = String(days).padStart(2, "0");
+    if (parts.hours) parts.hours.textContent = String(hours).padStart(2, "0");
+    if (parts.minutes) parts.minutes.textContent = String(minutes).padStart(2, "0");
+    if (parts.seconds) parts.seconds.textContent = String(seconds).padStart(2, "0");
   };
 
-  const isDark = document.documentElement.dataset.theme === "dark";
-  updateThemeControl(isDark);
-  toggle.addEventListener("click", () => {
-    const nextIsDark = document.documentElement.dataset.theme !== "dark";
-    if (nextIsDark) {
-      document.documentElement.dataset.theme = "dark";
-    } else {
-      delete document.documentElement.dataset.theme;
-    }
-    updateThemeControl(nextIsDark);
-    updateDashboardChartTheme(nextIsDark);
+  update();
+  if (syllabusCountdownTimer) window.clearInterval(syllabusCountdownTimer);
+  syllabusCountdownTimer = window.setInterval(update, 1000);
+}
+
+function initTabs() {
+  const tabList = document.querySelector('[role="tablist"]');
+  if (!tabList) return;
+  const tabs = Array.from(tabList.querySelectorAll('[role="tab"]'));
+
+  const activate = (tab, focus = false) => {
+    tabs.forEach((item) => {
+      const selected = item === tab;
+      item.setAttribute("aria-selected", String(selected));
+      item.tabIndex = selected ? 0 : -1;
+      const panel = document.getElementById(item.getAttribute("aria-controls"));
+      if (!panel) return;
+      panel.hidden = !selected;
+      panel.classList.remove("is-active");
+      if (selected) {
+        requestAnimationFrame(() => panel.classList.add("is-active"));
+      }
+    });
+    if (focus) tab.focus();
+  };
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => activate(tab));
+    tab.addEventListener("keydown", (event) => {
+      let nextIndex = null;
+      if (event.key === "ArrowRight") nextIndex = (index + 1) % tabs.length;
+      if (event.key === "ArrowLeft") nextIndex = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === "Home") nextIndex = 0;
+      if (event.key === "End") nextIndex = tabs.length - 1;
+      if (nextIndex !== null) {
+        event.preventDefault();
+        activate(tabs[nextIndex], true);
+      }
+    });
   });
+  const selected = tabs.find((tab) => tab.getAttribute("aria-selected") === "true");
+  if (selected) activate(selected);
+}
+
+function initBibliographySearch() {
+  const search = document.getElementById("bibliography-search");
+  const items = Array.from(document.querySelectorAll(".bibliography-item"));
+  const emptyState = document.getElementById("bibliography-empty");
+  const count = document.getElementById("bibliography-result-count");
+  if (!search || items.length === 0) return;
+
+  const normalize = (value) => value
+    .toLocaleLowerCase("es")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
+  search.addEventListener("input", () => {
+    const query = normalize(search.value.trim());
+    let visibleCount = 0;
+    items.forEach((item) => {
+      const searchable = normalize(`${item.dataset.searchable || ""} ${item.textContent || ""}`);
+      const matches = searchable.includes(query);
+      item.hidden = !matches;
+      if (matches) visibleCount += 1;
+    });
+    document.querySelectorAll(".resource-group").forEach((group) => {
+      group.hidden = !Array.from(group.querySelectorAll(".bibliography-item")).some((item) => !item.hidden);
+    });
+    if (emptyState) emptyState.hidden = visibleCount > 0;
+    if (count) count.textContent = `${visibleCount} ${visibleCount === 1 ? "recurso disponible" : "recursos disponibles"}`;
+  });
+}
+
+function initSyllabus() {
+  const printButton = document.getElementById("print-syllabus");
+  printButton?.addEventListener("click", () => {
+    const bibliographyItems = Array.from(document.querySelectorAll(".bibliography-item"));
+    const itemStates = bibliographyItems.map((item) => ({ open: item.open, hidden: item.hidden }));
+    bibliographyItems.forEach((item) => {
+      item.open = true;
+      item.hidden = false;
+    });
+    window.addEventListener("afterprint", () => {
+      bibliographyItems.forEach((item, index) => {
+        item.open = itemStates[index].open;
+        item.hidden = itemStates[index].hidden;
+      });
+    }, { once: true });
+    window.print();
+  });
+
+  const unitCards = Array.from(document.querySelectorAll(".unit-card"));
+  unitCards.forEach((unit) => {
+    unit.addEventListener("toggle", () => {
+      if (unit.open) {
+        unitCards.forEach((otherUnit) => {
+          if (otherUnit !== unit) otherUnit.open = false;
+        });
+      }
+    });
+  });
+
+  initBibliographySearch();
+
+  const progress = document.getElementById("reading-progress");
+  const progressFill = document.getElementById("reading-progress-fill");
+  const backToTop = document.getElementById("back-to-top");
+  if (progress && progressFill && backToTop) {
+    const updateReadingProgress = () => {
+      const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const value = scrollableHeight > 0
+        ? Math.min(100, Math.max(0, Math.round((window.scrollY / scrollableHeight) * 100)))
+        : 0;
+      progress.setAttribute("aria-valuenow", String(value));
+      progressFill.style.width = `${value}%`;
+      backToTop.classList.toggle("is-visible", window.scrollY > 480);
+    };
+
+    window.addEventListener("scroll", updateReadingProgress, { passive: true });
+    window.addEventListener("resize", updateReadingProgress);
+    backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    updateReadingProgress();
+  }
 }
 
 function initializeScrollReveal() {
@@ -710,7 +937,8 @@ document.addEventListener("DOMContentLoaded", () => {
   loadTheoryContent();
   initializeQuiz();
   initializeNavigation();
-  initializeThemeToggle();
+  initTheme();
+  initSyllabus();
   initializeScrollReveal();
   renderCharts();
 });

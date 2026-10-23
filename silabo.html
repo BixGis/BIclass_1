@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Sílabo de Sistemas de Información para la Inteligencia de Negocios: unidades, competencias, metodología, evaluaciones y recursos.">
+    <meta name="theme-color" content="#0A0E1A">
+    <title>Sílabo | BI Fundamentals</title>
+    <script>
+      (function () {
+        var theme = null;
+        try {
+          theme = localStorage.getItem("tema");
+        } catch (error) {
+          console.error("No se pudo leer la preferencia de tema.", error);
+        }
+        if (theme !== "light" && theme !== "dark") {
+          theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        }
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/main.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <div class="reading-progress" id="reading-progress" role="progressbar" aria-label="Progreso de lectura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <span id="reading-progress-fill"></span>
+    </div>
+
+    <header class="site-header">
+      <nav class="navbar container" aria-label="Navegación principal">
+        <a class="brand" href="index.html" aria-label="BI Fundamentals, inicio">
+          <svg class="brand-mark" aria-hidden="true" viewBox="0 0 32 32" fill="none">
+            <path d="M6 24V17M13 24V11M20 24V7M27 24V14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+          <span>BI <span class="brand-accent">Fundamentals</span></span>
+        </a>
+        <div class="nav-links" id="nav-links">
+          <a href="index.html#fundamentos">Inicio</a>
+          <a href="index.html#dashboard">Dashboard</a>
+          <a class="nav-current" href="silabo.html" aria-current="page">Sílabo</a>
+          <a class="nav-mobile-cta" href="#unidades">Explorar unidades <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="nav-actions">
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Cambiar tema" aria-pressed="true" title="Cambiar tema">
+            <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M20.2 15.1A8.5 8.5 0 0 1 8.9 3.8 8.6 8.6 0 1 0 20.2 15.1Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/>
+              <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir navegación">
+            <span></span><span></span><span></span>
+          </button>
+          <a class="nav-cta" href="index.html">Volver al inicio</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="contenido" class="syllabus-page">
+      <section class="syllabus-hero" id="inicio">
+        <div class="container syllabus-hero-inner reveal">
+          <p class="hero-badge syllabus-badge"><span class="badge-dot" aria-hidden="true"></span> Universidad Técnica de Cotopaxi · Sílabo</p>
+          <h1>Sistemas de Información para la<br><span>Inteligencia de Negocios</span></h1>
+          <p class="syllabus-description">Fundamentos, gestión, modelamiento de datos y soluciones de Business Intelligence para la toma de decisiones empresariales.</p>
+          <div class="syllabus-hero-actions">
+            <a class="button button-primary" href="#unidades">Explorar las unidades <span aria-hidden="true">→</span></a>
+            <button class="button button-quiet print-syllabus" id="print-syllabus" type="button">Imprimir / Guardar como PDF</button>
+          </div>
+        </div>
+      </section>
+
+      <nav class="syllabus-index" aria-label="Índice del sílabo">
+        <div class="container syllabus-index-inner">
+          <span>En esta página</span>
+          <a href="#datos">Datos</a>
+          <a href="#objetivo">Objetivo</a>
+          <a href="#unidades">Unidades</a>
+          <a href="#competencias">Competencias</a>
+          <a href="#metodologia">Metodología</a>
+          <a href="#evaluaciones">Evaluaciones</a>
+          <a href="#plastrack">PlasTrack</a>
+          <a href="#bibliografia">Bibliografía</a>
+        </div>
+      </nav>
+
+      <section class="syllabus-section syllabus-data-section" id="datos">
+        <div class="container">
+          <div class="section-heading reveal">
+            <p class="eyebrow eyebrow-dark">Información académica</p>
+            <h2>La asignatura en datos</h2>
+            <p>Datos académicos y carga horaria consignados en el sílabo oficial.</p>
+          </div>
+          <div class="syllabus-facts">
+            <article class="syllabus-fact reveal"><span aria-hidden="true">01</span><div><small>Institución</small><strong>Universidad Técnica de Cotopaxi</strong></div></article>
+            <article class="syllabus-fact reveal"><span aria-hidden="true">02</span><div><small>Carrera</small><strong>Sistemas de Información</strong></div></article>
+            <article class="syllabus-fact reveal"><span aria-hidden="true">03</span><div><small>Asignatura</small><strong>Sistemas de Información para la Inteligencia de Negocios</strong></div></article>
+            <article class="syllabus-fact reveal"><span aria-hidden="true">04</span><div><small>Ciclo</small><strong>Octavo</strong></div></article>
+            <article class="syllabus-fact reveal"><span aria-hidden="true">05</span><div><small>Período académico</small><strong>12 de octubre de 2026 al 21 de febrero de 2027</strong></div></article>
+            <article class="syllabus-fact reveal"><span aria-hidden="true">06</span><div><small>Paralelo</small><strong>A</strong></div></article>
+            <article class="syllabus-fact reveal"><span aria-hidden="true">07</span><div><small>Créditos</small><strong>3</strong></div></article>
+            <article class="syllabus-fact reveal syllabus-fact-total"><span aria-hidden="true">144</span><div><small>Horas totales</small><strong>144 horas</strong></div></article>
+          </div>
+          <article class="hours-card reveal">
+            <div class="hours-heading"><div><p class="card-eyebrow">Distribución oficial</p><h3>144 horas de aprendizaje</h3></div><span>48 h por componente</span></div>
+            <div class="hours-bar" role="img" aria-label="Distribución equitativa de 144 horas: 48 horas de docencia, 48 de prácticas y 48 de trabajo autónomo">
+              <span class="hours-teaching"></span><span class="hours-practice"></span><span class="hours-independent"></span>
+            </div>
+            <div class="hours-legend">
+              <span><i class="hours-dot hours-teaching"></i>Docencia <strong>48 h</strong></span>
+              <span><i class="hours-dot hours-practice"></i>Prácticas <strong>48 h</strong></span>
+              <span><i class="hours-dot hours-independent"></i>Trabajo autónomo <strong>48 h</strong></span>
+            </div>
+            <p class="hours-note">La distribución corresponde al sílabo oficial.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="syllabus-section syllabus-objective-section" id="objetivo">
+        <div class="container syllabus-objective-layout">
+          <div class="section-heading reveal">
+            <p class="eyebrow eyebrow-dark">Propósito de aprendizaje</p>
+            <h2>¿Qué aprenderás en esta asignatura?</h2>
+            <p>De los datos organizacionales a la información que apoya la toma de decisiones.</p>
+          </div>
+          <article class="objective-card reveal">
+            <span class="objective-mark" aria-hidden="true">BI</span>
+            <div>
+              <p class="card-eyebrow">Objetivo general del sílabo</p>
+              <p>Analizar los principales conceptos relacionados con los fundamentos, características y modelamiento de la inteligencia de negocios para comprender cómo implementar herramientas de BI en una organización mediante las etapas necesarias para su correcta ejecución.</p>
+            </div>
+          </article>
+          <div class="objective-flow reveal" aria-label="Transformación de datos para la toma de decisiones">
+            <span>Datos organizacionales</span><b aria-hidden="true">→</b><span>Análisis con BI</span><b aria-hidden="true">→</b><span>Información útil</span><b aria-hidden="true">→</b><span>Decisiones</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="syllabus-section units-section" id="unidades">
+        <div class="container">
+          <div class="section-heading reveal">
+            <p class="eyebrow eyebrow-dark">Ruta de aprendizaje</p>
+            <h2>Las tres unidades</h2>
+            <p>Compara los resultados, competencias y conexiones; abre una unidad para consultar todos sus temas.</p>
+          </div>
+          <div class="unit-comparison">
+            <details class="unit-card reveal" name="learning-units">
+              <summary class="unit-card-summary">
+                <span class="unit-card-number">UNIDAD 01</span>
+                <h3>Fundamentos y gestión de la inteligencia de negocios</h3>
+                <span class="unit-summary-label">Temas principales</span>
+                <p>Conceptos y componentes de BI; sistemas de información, valor y ventaja corporativa; herramientas de BI.</p>
+                <span class="unit-summary-label">Resultado de aprendizaje</span>
+                <p>Identificar los conceptos básicos, herramientas y componentes de la inteligencia de negocios mediante la aplicación de herramientas de BI.</p>
+                <span class="unit-summary-label">Competencia que desarrolla</span>
+                <p>Reconocimiento de fundamentos y selección de herramientas de BI para comprender su utilidad en las organizaciones.</p>
+                <span class="unit-summary-label">Relación con las otras unidades</span>
+                <p>Establece la base conceptual que se profundiza con los modelos de datos de la Unidad 2 y se aplica en la solución de la Unidad 3.</p>
+                <span class="unit-explore">Explorar unidad <b aria-hidden="true">+</b></span>
+              </summary>
+              <div class="unit-card-details">
+                <div class="learning-outcome"><strong>Temas oficiales</strong>
+                  <ul>
+                    <li>Conceptos básicos de Business Intelligence.</li>
+                    <li>Componentes de la inteligencia de negocios.</li>
+                    <li>Sistemas de información y generación de valor y ventaja corporativa.</li>
+                    <li>Principales herramientas de Business Intelligence.</li>
+                  </ul>
+                </div>
+                <p class="unit-method"><strong>Metodología:</strong> aprendizaje cooperativo.</p>
+              </div>
+            </details>
+
+            <details class="unit-card reveal" name="learning-units">
+              <summary class="unit-card-summary">
+                <span class="unit-card-number">UNIDAD 02</span>
+                <h3>Sistemas de soporte a la administración y Data Warehouse</h3>
+                <span class="unit-summary-label">Temas principales</span>
+                <p>Variables de medición y análisis; Data Warehouse; gestión del conocimiento; patrones de evaluación, interpretación y visualización.</p>
+                <span class="unit-summary-label">Resultado de aprendizaje</span>
+                <p>Explotar esquemas de bases de datos multidimensionales utilizando herramientas de visualización, análisis y consultas, con una administración adecuada.</p>
+                <span class="unit-summary-label">Competencia que desarrolla</span>
+                <p>Análisis de datos multidimensionales y uso de herramientas para su consulta, evaluación e interpretación.</p>
+                <span class="unit-summary-label">Relación con las otras unidades</span>
+                <p>Utiliza los conceptos de BI de la Unidad 1 y prepara los datos y análisis que sustentan la solución de la Unidad 3.</p>
+                <span class="unit-explore">Explorar unidad <b aria-hidden="true">+</b></span>
+              </summary>
+              <div class="unit-card-details">
+                <div class="learning-outcome"><strong>Temas oficiales</strong>
+                  <ul>
+                    <li>Variables de medición y análisis.</li>
+                    <li>Data Warehouse.</li>
+                    <li>Sistemas de gestión del conocimiento.</li>
+                    <li>Patrones: evaluación, interpretación y visualización.</li>
+                  </ul>
+                </div>
+                <div class="architecture-flow" aria-label="Arquitectura analítica: datos, almacenamiento, análisis y visualización">
+                  <span>Datos</span><b aria-hidden="true">→</b><span>Almacenamiento</span><b aria-hidden="true">→</b><span>Análisis</span><b aria-hidden="true">→</b><span>Visualización</span>
+                </div>
+                <p class="unit-method"><strong>Metodología:</strong> aprendizaje basado en problemas.</p>
+              </div>
+            </details>
+
+            <details class="unit-card reveal" name="learning-units">
+              <summary class="unit-card-summary">
+                <span class="unit-card-number">UNIDAD 03</span>
+                <h3>Sistema de soporte para toma de decisiones empresariales</h3>
+                <span class="unit-summary-label">Temas principales</span>
+                <p>Hipercubos de datos; ETL; reporteadores; alertas y dashboards; KPI; aspectos técnicos del proyecto.</p>
+                <span class="unit-summary-label">Resultado de aprendizaje</span>
+                <p>Construir una solución de inteligencia de negocios para un caso práctico, modelando la información organizacional.</p>
+                <span class="unit-summary-label">Competencia que desarrolla</span>
+                <p>Modelamiento de información y construcción de soluciones de BI que apoyan decisiones empresariales.</p>
+                <span class="unit-summary-label">Relación con las otras unidades</span>
+                <p>Integra los fundamentos de la Unidad 1 y los esquemas analíticos de la Unidad 2 en una aplicación práctica.</p>
+                <span class="unit-explore">Explorar unidad <b aria-hidden="true">+</b></span>
+              </summary>
+              <div class="unit-card-details">
+                <div class="learning-outcome"><strong>Temas oficiales</strong>
+                  <ul>
+                    <li>Vistas multidimensionales o hipercubos de datos.</li>
+                    <li>Procesos ETL.</li>
+                    <li>Reporteadores.</li>
+                    <li>Alertas y tableros de control o dashboards.</li>
+                    <li>Indicadores clave de desempeño (KPI).</li>
+                    <li>Aspectos técnicos del proyecto.</li>
+                  </ul>
+                </div>
+                <div class="decision-flow" aria-label="Representación didáctica: fuentes de datos, ETL, modelado, reportes, KPI y decisiones">
+                  <span>Fuentes de datos</span><b aria-hidden="true">→</b><span>ETL</span><b aria-hidden="true">→</b><span>Modelado</span><b aria-hidden="true">→</b><span>Reportes y dashboards</span><b aria-hidden="true">→</b><span>KPI</span><b aria-hidden="true">→</b><span>Decisiones</span>
+                </div>
+                <p class="diagram-note">Flujo didáctico de los temas de la unidad; no es una transcripción literal del sílabo.</p>
+                <p class="unit-method"><strong>Metodología:</strong> aprendizaje basado en proyectos.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="syllabus-section soft-skills-section" id="competencias">
+        <div class="container">
+          <div class="section-heading reveal">
+            <p class="eyebrow eyebrow-dark">Aprendizaje integral</p>
+            <h2>Competencias que desarrollarás</h2>
+            <p>Habilidades para aplicar BI con criterio, creatividad y responsabilidad.</p>
+          </div>
+          <div class="skills-grid">
+            <article class="skill-card reveal"><span aria-hidden="true">01</span><h3>Competencia digital</h3><p>Usar herramientas y recursos digitales de forma eficaz y responsable.</p></article>
+            <article class="skill-card reveal"><span aria-hidden="true">02</span><h3>Creatividad</h3><p>Diseñar soluciones de BI que respondan a las necesidades de una organización.</p></article>
+            <article class="skill-card reveal"><span aria-hidden="true">03</span><h3>Ética</h3><p>Tratar los datos con responsabilidad, transparencia y respeto por su confidencialidad.</p></article>
+            <article class="skill-card reveal"><span aria-hidden="true">04</span><h3>Liderazgo</h3><p>Coordinar el trabajo en equipo y comunicar con claridad los hallazgos.</p></article>
+            <article class="skill-card reveal"><span aria-hidden="true">05</span><h3>Pensamiento crítico</h3><p>Evaluar la calidad de los datos y la validez de los indicadores antes de interpretarlos.</p></article>
+            <article class="skill-card reveal"><span aria-hidden="true">06</span><h3>Resolución de problemas</h3><p>Analizar necesidades y construir soluciones de inteligencia de negocios.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="syllabus-section methodology-section" id="metodologia">
+        <div class="container">
+          <div class="section-heading reveal">
+            <p class="eyebrow eyebrow-dark">Cómo aprenderás</p>
+            <h2>Metodologías de aprendizaje</h2>
+            <p>La ruta pasa de comprender conceptos a analizar problemas y desarrollar un proyecto.</p>
+          </div>
+          <div class="methodology-steps">
+            <article class="method-step reveal"><span>UNIDAD 01</span><h3>Aprendizaje cooperativo</h3><p>Construcción compartida de los fundamentos y la gestión de BI.</p></article>
+            <b aria-hidden="true">→</b>
+            <article class="method-step reveal"><span>UNIDAD 02</span><h3>Aprendizaje basado en problemas</h3><p>Análisis de situaciones mediante datos y esquemas multidimensionales.</p></article>
+            <b aria-hidden="true">→</b>
+            <article class="method-step reveal"><span>UNIDAD 03</span><h3>Aprendizaje basado en proyectos</h3><p>Aplicación de los aprendizajes en una solución práctica de BI.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="syllabus-section evaluation-section" id="evaluaciones">
+        <div class="container">
+          <div class="section-heading reveal">
+            <p class="eyebrow eyebrow-dark">Calendario académico</p>
+            <h2>Evaluaciones y fechas importantes</h2>
+            <p>Fechas registradas en el sílabo.</p>
+          </div>
+          <ol class="evaluation-timeline">
+            <li class="evaluation-point reveal"><span class="evaluation-code">EVAL1</span><time datetime="2026-11-22">22 de noviembre de 2026</time></li>
+            <li class="evaluation-point reveal"><span class="evaluation-code">EVAL2</span><time datetime="2027-01-10">10 de enero de 2027</time></li>
+            <li class="evaluation-point reveal"><span class="evaluation-code">EVAL3</span><time datetime="2027-02-14">14 de febrero de 2027</time></li>
+          </ol>
+          <p class="evaluation-note">Estas son las fechas consignadas en el documento. Confirma con el docente cualquier cambio.</p>
+        </div>
+      </section>
+
+      <section class="syllabus-section plastrack-section" id="plastrack">
+        <div class="container">
+          <article class="plastrack-card reveal">
+            <div class="plastrack-icon" aria-hidden="true">PT</div>
+            <div class="plastrack-copy">
+              <p class="card-eyebrow">Proyecto articulador del sílabo</p>
+              <h2>Monitoreo Inteligente de Microplásticos mediante Datos Copernicus para la Conservación de Ecosistemas Insulares (PlasTrack)</h2>
+              <p>La asignatura aporta a transformar datos satelitales de Copernicus y CMEMS en información estratégica mediante dashboards, KPI y sistemas de alerta temprana. Esta información busca apoyar decisiones del sector pesquero y de gestores ambientales. Esta página resume el aporte de BI descrito en el sílabo; no implementa el proyecto PlasTrack real.</p>
+              <div class="plastrack-flow" aria-label="Síntesis visual del aporte de BI a PlasTrack">
+                <span>Datos satelitales</span><b aria-hidden="true">→</b><span>Procesamiento y análisis</span><b aria-hidden="true">→</b><span>Indicadores</span><b aria-hidden="true">→</b><span>Dashboard y alertas</span><b aria-hidden="true">→</b><span>Decisiones ambientales</span>
+              </div>
+              <p class="diagram-note">Síntesis visual del aporte de BI al proyecto descrito en el sílabo.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="syllabus-section bibliography-section" id="bibliografia">
+        <div class="container">
+          <div class="section-heading reveal">
+            <p class="eyebrow eyebrow-dark">Lecturas y recursos</p>
+            <h2>Bibliografía y recursos académicos</h2>
+            <p>Fuentes incluidas en el sílabo. Selecciona un título para abrir el recurso.</p>
+          </div>
+          <div class="bibliography-search reveal">
+            <label for="bibliography-search">Buscar recursos</label>
+            <input id="bibliography-search" type="search" placeholder="Buscar por título o tema…" autocomplete="off">
+            <p id="bibliography-result-count" aria-live="polite">10 recursos disponibles</p>
+          </div>
+          <div class="resource-groups">
+            <section class="resource-group" aria-labelledby="basic-resources">
+              <h3 id="basic-resources">Bibliografía básica</h3>
+              <div class="bibliography-list" id="bibliography-list">
+                <details class="bibliography-item reveal" data-searchable="planificar proyecto inteligencia negocio"><summary><span class="bibliography-type">Bibliografía básica</span><strong>¿Cómo planificar un proyecto de inteligencia de negocio?</strong><span class="bibliography-author">Acceso en eLibro</span></summary><div><a href="https://elibro.net/es/lc/utcotopaxi/titulos/58548" target="_blank" rel="noopener noreferrer">Abrir recurso <span aria-hidden="true">↗</span></a></div></details>
+                <details class="bibliography-item reveal" data-searchable="base de datos"><summary><span class="bibliography-type">Bibliografía básica</span><strong>Base de datos.</strong><span class="bibliography-author">Acceso en eLibro</span></summary><div><a href="https://elibro.net/es/lc/utcotopaxi/titulos/121283" target="_blank" rel="noopener noreferrer">Abrir recurso <span aria-hidden="true">↗</span></a></div></details>
+                <details class="bibliography-item reveal" data-searchable="toma decisiones práctica"><summary><span class="bibliography-type">Bibliografía básica</span><strong>La toma de decisiones en la práctica.</strong><span class="bibliography-author">Acceso en eLibro</span></summary><div><a href="https://elibro.net/es/lc/utcotopaxi/titulos/227386" target="_blank" rel="noopener noreferrer">Abrir recurso <span aria-hidden="true">↗</span></a></div></details>
+                <details class="bibliography-item reveal" data-searchable="excel power bi cóctel perfecto"><summary><span class="bibliography-type">Bibliografía básica</span><strong>Excel y Power BI: el cóctel perfecto.</strong><span class="bibliography-author">Acceso en eLibro</span></summary><div><a href="https://elibro.net/es/lc/utcotopaxi/titulos/282827" target="_blank" rel="noopener noreferrer">Abrir recurso <span aria-hidden="true">↗</span></a></div></details>
+              </div>
+            </section>
+            <section class="resource-group" aria-labelledby="complementary-resources">
+              <h3 id="complementary-resources">Recursos complementarios</h3>
+              <div class="bibliography-list">
+                <details class="bibliography-item reveal" data-searchable="introducción business intelligence"><summary><span class="bibliography-type">Recurso complementario</span><strong>Introducción al Business Intelligence</strong><span class="bibliography-author">Documento PDF</span></summary><div><a href="http://cursos.yura.website/wp-content/uploads/2020/03/Introduccion_al_Business_Intelligence.pdf" target="_blank" rel="noopener noreferrer">Abrir recurso <span aria-hidden="true">↗</span></a></div></details>
+                <details class="bibliography-item reveal" data-searchable="análisis comparativo herramientas web visualizaciones interactivas"><summary><span class="bibliography-type">Recurso complementario</span><strong>Análisis comparativo de herramientas web para la generación de visualizaciones interactivas</strong><span class="bibliography-author">Artículo en Dialnet</span></summary><div><a href="https://dialnet.unirioja.es/servlet/articulo?codigo=10387164" target="_blank" rel="noopener noreferrer">Abrir recurso <span aria-hidden="true">↗</span></a></div></details>
+                <details class="bibliography-item reveal" data-searchable="desarrollo inteligencia empresarial análisis comparativo power bi qlik sense tableros estratégicos indicadores clave"><summary><span class="bibliography-type">Recurso complementario</span><strong>Desarrollo de inteligencia empresarial: análisis comparativo entre Power BI y Qlik Sense en la implementación de tableros estratégicos de indicadores clave</strong><span class="bibliography-author">Artículo</span></summary><div><a href="http://technologyrain.com.ar/index.php/trj/article/view/30" target="_blank" rel="noopener noreferrer">Abrir recurso <span aria-hidden="true">↗</span></a></div></details>
+              </div>
+            </section>
+            <section class="resource-group" aria-labelledby="web-resources">
+              <h3 id="web-resources">Sitios web recomendados</h3>
+              <div class="bibliography-list">
+                <details class="bibliography-item reveal" data-searchable="tecnologías .net chart.js tablero indicadores clave"><summary><span class="bibliography-type">Sitio recomendado</span><strong>Aplicación de tecnologías .NET y Chart.js para el desarrollo de un tablero de indicadores clave</strong><span class="bibliography-author">Documento PDF</span></summary><div><a href="https://ecuciencia.utc.edu.ec/media/articulo/articulo-005-corregido.pdf" target="_blank" rel="noopener noreferrer">Abrir recurso <span aria-hidden="true">↗</span></a></div></details>
+                <details class="bibliography-item reveal" data-searchable="inteligencia negocios generación valor ventaja competitiva microempresas"><summary><span class="bibliography-type">Sitio recomendado</span><strong>Inteligencia de negocios como alternativa de generación de valor y ventaja competitiva en las microempresas</strong><span class="bibliography-author">Artículo</span></summary><div><a href="https://investigacion.utc.edu.ec/index.php/ciya/es/article/view/391" target="_blank" rel="noopener noreferrer">Abrir recurso <span aria-hidden="true">↗</span></a></div></details>
+                <details class="bibliography-item reveal" data-searchable="documentación oficial power bi microsoft"><summary><span class="bibliography-type">Sitio recomendado</span><strong>Documentación oficial de Power BI</strong><span class="bibliography-author">Microsoft Learn</span></summary><div><a href="https://learn.microsoft.com/es-es/power-bi/" target="_blank" rel="noopener noreferrer">Abrir recurso <span aria-hidden="true">↗</span></a></div></details>
+              </div>
+            </section>
+          </div>
+          <p class="bibliography-empty" id="bibliography-empty" hidden>No se encontraron recursos. Prueba con otro término.</p>
+        </div>
+      </section>
+
+      <section class="syllabus-bottom-cta">
+        <div class="container">
+          <p class="eyebrow eyebrow-dark">Continúa aprendiendo</p>
+          <h2>Conecta el sílabo con los fundamentos de BI</h2>
+          <a class="button button-primary" href="index.html#fundamentos">Volver a la página principal <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+    </main>
+
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Volver al inicio de la página" title="Volver al inicio">↑</button>
+
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <a class="brand footer-brand" href="index.html">
+          <svg class="brand-mark" aria-hidden="true" viewBox="0 0 32 32" fill="none"><path d="M6 24V17M13 24V11M20 24V7M27 24V14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+          <span>BI <span class="brand-accent">Fundamentals</span></span>
+        </a>
+        <p>Material educativo · Sistemas de Información para la Inteligencia de Negocios</p>
+        <div class="footer-links"><a class="footer-link" href="index.html#fundamentos">Fundamentos</a><a class="footer-link" href="#unidades">Unidades</a><a class="footer-link" href="#bibliografia">Bibliografía</a></div>
+      </div>
+      <div class="container footer-bottom"><span>Aprender · Analizar · Decidir</span><span>© 2026 BI Fundamentals</span></div>
+    </footer>
+  </body>
+</html>
